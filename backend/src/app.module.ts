@@ -1,19 +1,29 @@
+// src/app.module.ts
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config'; // 1. Importar
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { NotesModule } from './notes/notes.module';
-
+import databaseConfig from './config/database.config'; // 2. Importar nossa config
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'sqlite', // Tipo do banco de dados
-      database: 'database.sqlite', // Nome do arquivo do banco
-      entities: [__dirname + '/**/*.entity{.ts,.js}'], // Onde encontrar as entidades
-      synchronize: true, // Apenas para desenvolvimento! Cria as tabelas automaticamente
+    // 3. Carregar o módulo de configuração
+    ConfigModule.forRoot({
+      isGlobal: true, // Torna o ConfigModule disponível globalmente
+      load: [databaseConfig], // Carrega nosso arquivo de configuração
     }),
-    NotesModule
+
+    // 4. Usar a configuração do TypeORM de forma assíncrona
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule], // Importar o ConfigModule para o provider
+      inject: [ConfigService], // Injetar o ConfigService
+      useFactory: (configService: ConfigService) =>
+        configService.getOrThrow('database'),// Usar a factory para pegar a config pelo namespace 'database'
+    }),
+
+    NotesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
