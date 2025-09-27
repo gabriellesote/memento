@@ -1,6 +1,5 @@
 
-
-# Memento 📝
+<img src="banner_memento.png" alt="Banner do projeto escrito 'memento'"/>
 
 ## Sobre o Projeto
 
