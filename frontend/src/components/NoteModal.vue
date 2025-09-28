@@ -46,12 +46,13 @@ function handleCancel() {
   <div v-if="note" class="modal-overlay" @click.self="emit('close')">
     <div class="modal-content">
       <button class="close-button" @click="emit('close')">
-        <CloseIcon class="cancelIcon" />
+        <CloseIcon class="close-icon" />
       </button>
 
       <div v-if="!isEditing">
         <h2>{{ note.title }}</h2>
         <p class="note-body">{{ note.content }}</p>
+
         <div class="footer">
           <div class="actions">
             <button @click="isEditing = true" aria-label="Editar nota">
@@ -72,12 +73,11 @@ function handleCancel() {
         <input type="text" v-model="editableNote.title" placeholder="Título" />
         <textarea v-model="editableNote.content" placeholder="Conteúdo" rows="10"></textarea>
         <div class="footer edit-actions">
-          <button @click="handleCancel" aria-label="Cancelar alterações">
-            <CancelIcon class="cancelIcon"/>
+          <button @click="handleCancel" aria-label="Cancelar alterações" class="cancel-button">
+            <CancelIcon class="cancel-icon" />
           </button>
-          <button @click="handleUpdate" aria-label="Aceitar alterações">
-
-            <AcceptIcon class="acceptIcon"/>
+          <button @click="handleUpdate" aria-label="Aceitar alterações" class="accept-button">
+            <AcceptIcon class="accept-icon" />
           </button>
         </div>
       </div>
@@ -116,32 +116,34 @@ function handleCancel() {
   border: none;
   font-size: 2rem;
   cursor: pointer;
-  color: #aaa;
+
 }
 
 .note-body {
   white-space: pre-wrap;
   margin: 20px 0;
-  min-height: 150px;
+  min-height: fit-content;
 }
 
 .footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
+ 
 }
 
 .actions {
   display: flex;
-  gap: 10px;
+  background-color: blanchedalmond;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .actions button {
   background: none;
   border: none;
   cursor: pointer;
-  color: #555;
+
   padding: 5px;
   display: inline-flex;
   align-items: center;
@@ -176,27 +178,28 @@ input[type='text'] {
 .edit-actions {
   display: flex;
   align-items: center;
-  justify-content:center;
+  justify-content: center;
   gap: 10px;
 }
 
 .edit-actions button {
   height: 40px;
   width: 40px;
-  background-color: none;
+  background-color: transparent;
   border: none;
+
+}
+
+.cancel-button {
+
+  color: #5E2020;
+
 }
 
 
+.accept-button {
 
-.edit-actions button:hover {
-  opacity: 0.9;
-}
+  color: #2E661E;
 
-
-.edit-actions button:last-child :deep(svg) {
-  width: 20px;
-  height: 20px;
-  fill: white;
 }
 </style>
