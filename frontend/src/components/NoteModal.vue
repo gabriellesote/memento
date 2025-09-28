@@ -2,6 +2,7 @@
 import type { Note } from '@/types/Notes'
 import { ref, watch } from 'vue'
 
+import Close from '@/assets/icons/Close.svg?component'
 
 
 
@@ -43,7 +44,7 @@ function handleCancel() {
 <template>
   <div v-if="note" class="modal-overlay" @click.self="emit('close')">
     <div class="modal-content">
-      <button class="close-button" @click="emit('close')">oi</button>
+      <button class="close-button" @click="emit('close')"><Close/></button>
 
       <div v-if="!isEditing">
         <h2>{{ note.title }}</h2>
