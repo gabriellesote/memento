@@ -10,7 +10,7 @@ async function bootstrap() {
     forbidNonWhitelisted: true, // Lança um erro se propriedades extras forem enviadas
     transform: true, // Transforma os tipos dos dados (ex: string de número para number)
   }));
-  
+  app.enableCors();
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
