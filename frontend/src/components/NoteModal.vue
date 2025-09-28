@@ -2,9 +2,11 @@
 import type { Note } from '@/types/Notes'
 import { ref, watch } from 'vue'
 
-import Close from '@/assets/icons/Close.svg?component'
-
-
+import EditIcon from '@/assets/icons/Edit-icon.svg?component'
+import TrashIcon from '@/assets/icons/Trash-icon.svg?component'
+import AcceptIcon from '@/assets/icons/Accept-icon.svg?component'
+import CancelIcon from '@/assets/icons/Cancel-icon.svg?component'
+import CloseIcon from '@/assets/icons/Close-icon.svg?component'
 
 const props = defineProps<{
   note: Note | null
@@ -33,7 +35,6 @@ function handleUpdate() {
 }
 
 function handleCancel() {
-
   if (props.note) {
     editableNote.value = { ...props.note }
   }
@@ -44,7 +45,9 @@ function handleCancel() {
 <template>
   <div v-if="note" class="modal-overlay" @click.self="emit('close')">
     <div class="modal-content">
-      <button class="close-button" @click="emit('close')"><Close/></button>
+      <button class="close-button" @click="emit('close')">
+        <CloseIcon class="cancelIcon" />
+      </button>
 
       <div v-if="!isEditing">
         <h2>{{ note.title }}</h2>
@@ -52,10 +55,14 @@ function handleCancel() {
         <div class="footer">
           <div class="actions">
             <button @click="isEditing = true" aria-label="Editar nota">
+
               <EditIcon />
+
             </button>
             <button @click="emit('delete', note.id)" aria-label="Apagar nota">
+
               <TrashIcon />
+
             </button>
           </div>
         </div>
@@ -65,9 +72,12 @@ function handleCancel() {
         <input type="text" v-model="editableNote.title" placeholder="Título" />
         <textarea v-model="editableNote.content" placeholder="Conteúdo" rows="10"></textarea>
         <div class="footer edit-actions">
-          <button @click="handleCancel">Cancelar</button>
+          <button @click="handleCancel" aria-label="Cancelar alterações">
+            <CancelIcon class="cancelIcon"/>
+          </button>
           <button @click="handleUpdate" aria-label="Aceitar alterações">
-            <AcceptIcon />
+
+            <AcceptIcon class="acceptIcon"/>
           </button>
         </div>
       </div>
@@ -106,6 +116,7 @@ function handleCancel() {
   border: none;
   font-size: 2rem;
   cursor: pointer;
+  color: #aaa;
 }
 
 .note-body {
@@ -121,14 +132,31 @@ function handleCancel() {
   margin-top: 20px;
 }
 
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
 .actions button {
   background: none;
   border: none;
-  font-size: 1.5rem;
   cursor: pointer;
-  margin-left: 15px;
+  color: #555;
+  padding: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
+.actions button:hover {
+  color: #000;
+}
+
+.actions button :deep(svg) {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
 
 input[type='text'],
 textarea {
@@ -146,12 +174,29 @@ input[type='text'] {
 }
 
 .edit-actions {
-  justify-content: flex-end;
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  gap: 10px;
 }
 
 .edit-actions button {
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  background-color: none;
+  border: none;
+}
+
+
+
+.edit-actions button:hover {
+  opacity: 0.9;
+}
+
+
+.edit-actions button:last-child :deep(svg) {
+  width: 20px;
+  height: 20px;
+  fill: white;
 }
 </style>
