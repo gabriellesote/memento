@@ -68,24 +68,24 @@ Durante o desenvolvimento, o design foi adaptado para priorizar a usabilidade, a
   </a>
 </div>
 
-#### 📦 Backend
+### 📦 Backend
 
 -   **Framework:** [NestJS](https://nestjs.com/)
 -   **Linguagem:** [TypeScript](https://www.typescriptlang.org/)
 -   **ORM:** [TypeORM](https://typeorm.io/)
 
-#### 🗃️ Banco de Dados
+### 🗃️ Banco de Dados
 
 -   **SGBD:** [SQLite](https://www.sqlite.org/index.html) (Banco de dados local baseado em arquivo)
 
-#### 🎨 Frontend
+### 🎨 Frontend
 
 -   **Framework:** [Vue.js 3](https://vuejs.org/) (utilizando a Composition API)
 -   **Build Tool:** [Vite](https://vitejs.dev/)
 -   **Gerenciador de Estado:** [Pinia](https://pinia.vuejs.org/)
 -   **Cliente HTTP:** [Axios](https://axios-http.com/)
 
-#### 🛠️ Ferramentas e Metodologia
+### 🛠️ Ferramentas e Metodologia
 
 -   **Runtime:** [Node.js](https://nodejs.org/)
 -   **Gerenciador de Pacotes:** [npm](https://www.npmjs.com/)
@@ -102,7 +102,7 @@ Durante o desenvolvimento, o design foi adaptado para priorizar a usabilidade, a
   </summary>
 
  
-### Backend (`/backend`)
+### 📦 Backend (`/backend`)
 
 ```
 memento/
@@ -122,7 +122,7 @@ memento/
 │  ├─ .env.example
 
 ```
-### Frontend (`/frontend`)
+### 🎨 Frontend (`/frontend`)
 
 
 ```
