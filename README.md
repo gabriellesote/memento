@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="banner_memento.png" alt="Banner do projeto escrito 'memento'"/>
+  <img src="https://github.com/gabriellesote/memento/blob/main/assets_readme/banner_memento.png" alt="Banner do projeto escrito 'memento'"/>
 </div>
 
 ## 🎯 Sobre o Projeto
@@ -17,6 +17,44 @@ As especificações técnicas obrigatórias para o desenvolvimento foram:
 -   **Banco de Dados:** Um banco de dados local.
 
 ---
+
+<details>
+  <summary>
+    <h2> 🎨 Design e Conceito Visual <h2/>
+  </summary>
+
+
+#### A identidade visual do "projeto Memo" foi concebida para evocar a sensação tátil e pessoal de um caderno de anotações físico.
+
+### 📖 A Inspiração: Um Caderno de Anotações
+
+A ideia central do design foi simples: já que o projeto é um site de anotações, a interface deveria parecer um caderno. Buscamos uma estética que trouxesse a sensação familiar de um bloco de notas físico para o ambiente digital, tornando a tarefa de criar e gerenciar lembretes mais agradável.
+
+### 🖍️ O Protótipo no Figma
+
+Para materializar essa visão, foi desenvolvido um protótipo no Figma que serviu como nosso guia conceitual. Ele explorou uma estética mais lúdica e artesanal, com fontes que imitam a escrita à mão e componentes de interface com um aspecto de "desenhado".
+
+<details>
+<summary> <h3> 🖼️ Imagens </h3> </summary>
+
+<div align=center>
+  <img src="https://github.com/gabriellesote/memento/blob/main/assets_readme/tela%20inicial.png" alt="tela inicial" width=40%/>
+  <img src="https://github.com/gabriellesote/memento/blob/main/assets_readme/abrir%20notas.png" alt="abrir notas" width=40%/>
+  <img src="https://github.com/gabriellesote/memento/blob/main/assets_readme/editando.png" alt="editar notas" width=40%/>
+</div>
+
+  
+</details>
+ 
+
+### 📌 A Implementação Final
+
+Durante o desenvolvimento, o design foi adaptado para priorizar a usabilidade, a performance e a agilidade na implementação. Embora a versão final do site tenha uma abordagem visual mais minimalista e não seja uma réplica exata do protótipo, ela busca manter o **espírito** do conceito original: um ambiente digital simples, intuitivo e funcional para suas anotações, preservando a essência de um espaço pessoal para ideias.
+
+
+
+</details>
+
 
 <details>
 <summary> <h2>⚙️ Tecnologias e Ferramentas </h2>
