@@ -1,4 +1,4 @@
-# Logs
+# Arquivos de log
 logs
 *.log
 npm-debug.log*
@@ -6,35 +6,42 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+*.tsbuildinfo
 
-node_modules
-.DS_Store
-dist
-dist-ssr
-coverage
+# Dependências
+# Ignora a pasta node_modules na raiz deste arquivo
+/node_modules/
+
+# Arquivos de Build
+/dist/
+/dist-ssr/
+
+# Cache
+.cache/
+.vite/
+.eslintcache
+
+# Arquivos de ambiente e segredos
+.env.local
+.env.*.local
 *.local
 
+# Arquivos de teste e cobertura de código
+/coverage/
 /cypress/videos/
 /cypress/screenshots/
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Arquivos de Sistema Operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos de Editor de Código
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-
-*.tsbuildinfo
-
-.env.local
-# Caches
-.vite
-.vite/
-.cache
-.vscode
-node_modules
-.pnp.*
-/node_modules
+# Ignora a pasta do VSCode, exceto o arquivo de extensões recomendadas
+.vscode/*
+!.vscode/extensions.json
