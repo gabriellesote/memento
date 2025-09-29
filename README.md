@@ -2,8 +2,6 @@
   <img src="banner_memento.png" alt="Banner do projeto escrito 'memento'"/>
 </div>
 
-<h1 align="center">Memento 📝</h1>
-
 ## 🎯 Sobre o Projeto
 
 <p>
