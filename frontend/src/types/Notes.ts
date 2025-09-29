@@ -5,6 +5,6 @@ export interface Note {
   title: string;
   content: string;
   // Adicione outros campos que sua API retorna, por exemplo:
-  // createdAt: string;
+  createdAt: string;
   // updatedAt: string;
 }

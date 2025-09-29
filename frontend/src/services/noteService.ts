@@ -1,29 +1,30 @@
-// frontend/src/services/noteService.ts
 import apiClient from './api';
-import type { Note } from '@/types/Notes'; // Importamos nossa Interface!
+import type { Note } from '@/types/Notes';
 import type { AxiosResponse } from 'axios';
 
-// Definindo a interface para os dados de criação/atualização (sem o ID)
 export interface NotePayload {
   title: string;
   content: string;
 }
 
 export const noteService = {
-  // A função agora retorna uma Promessa de um array de Notas
   getAllNotes(): Promise<AxiosResponse<Note[]>> {
-    return apiClient.get<Note[]>('/notes'); // Verifique se '/notes' é o endpoint correto
+    return apiClient.get<Note[]>('/notes');
   },
 
   createNote(payload: NotePayload): Promise<AxiosResponse<Note>> {
     return apiClient.post<Note>('/notes', payload);
   },
 
-  updateNote(id: number, payload: NotePayload): Promise<AxiosResponse<Note>> {
-    return apiClient.put<Note>(`/notes/${id}`, payload);
+  // MUDANÇA AQUI: id agora é 'string'
+  updateNote(id: string, payload: NotePayload): Promise<AxiosResponse<Note>> {
+    // ANTES: return apiClient.put<Note>(`/notes/${id}`, payload);
+    // AGORA:
+    return apiClient.patch<Note>(`/notes/${id}`, payload);
   },
 
-  deleteNote(id: number): Promise<AxiosResponse<void>> {
+  // MUDANÇA AQUI: id agora é 'string'
+  deleteNote(id: string): Promise<AxiosResponse<void>> {
     return apiClient.delete(`/notes/${id}`);
   }
 };

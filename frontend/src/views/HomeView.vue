@@ -1,42 +1,96 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useNoteStore } from '@/stores/noteStores'
+import { useNoteStore } from '@/stores/noteStore'
 import type { Note } from '@/types/Notes'
 
-import NoteCard from '@/components/Card.vue'
-import NoteModal from '@/components/NoteModal.vue' // 1. Importamos o modal
+// Componentes
+import NoteFormModal from '@/components/NoteFormModal.vue'
+import NotesGrid from '@/components/NotesGrid.vue'
+
+// Ícones SVG como componentes
+import RightIcon from '@/assets/icons/Right-icon.svg?component'
+import LeftIcon from '@/assets/icons/Left-icon.svg?component'
+import AddIcon from '@/assets/icons/Add-icon.svg?component'
+
 
 const noteStore = useNoteStore()
 const { notes, loading } = storeToRefs(noteStore)
 
-// 2. State para controlar qual nota está selecionada para o modal
-const selectedNote = ref<Note | null>(null)
+// --- CONTROLE DOS MODAIS ---
+const selectedNote = ref<Note | null>(null) // Para edição
+const isCreateModalOpen = ref(false)         // Para criação
 
-// 3. Funções para abrir e fechar o modal
-function openModal(note: Note) {
+// --- LÓGICA DA PAGINAÇÃO ---
+const currentPage = ref(1)
+const itemsPerPage = ref(10)
+
+const paginatedNotes = computed(() => {
+  const startIndex = (currentPage.value - 1) * itemsPerPage.value
+  const endIndex = startIndex + itemsPerPage.value
+  return notes.value.slice(startIndex, endIndex)
+})
+
+const totalPages = computed(() => {
+  if (notes.value.length === 0) return 1
+  return Math.ceil(notes.value.length / itemsPerPage.value)
+})
+
+function nextPage() {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++
+  }
+}
+
+function prevPage() {
+  if (currentPage.value > 1) {
+    currentPage.value--
+  }
+}
+
+function goToPage(pageNumber: number) {
+  currentPage.value = pageNumber
+}
+
+// --- FUNÇÕES DOS MODAIS ---
+function openEditModal(note: Note) {
   selectedNote.value = note
 }
-function closeModal() {
+
+function closeEditModal() {
   selectedNote.value = null
 }
 
-// 4. Funções para lidar com os eventos do modal
-function handleDeleteNote(noteId: number) {
-  // Adicionar confirmação aqui é uma boa prática!
+function openCreateModal() {
+  isCreateModalOpen.value = true
+}
+
+function closeCreateModal() {
+  isCreateModalOpen.value = false
+}
+
+// --- HANDLERS DE EVENTOS DO MODAL ---
+function handleDeleteNote(noteId: string) {
   if (confirm('Tem certeza que deseja apagar esta nota?')) {
-    // Chamar a action da store (que criaremos a seguir)
-    // noteStore.deleteNoteAction(noteId);
-    console.log('Deletar nota:', noteId) // Placeholder
-    closeModal()
+    // ANTES: console.log('Deletar nota:', noteId)
+    // AGORA:
+    noteStore.deleteNoteAction(noteId);
+    closeEditModal()
   }
 }
 
 function handleUpdateNote(noteToUpdate: Note) {
-  // Chamar a action da store (que criaremos a seguir)
-  // noteStore.updateNoteAction(noteToUpdate);
-  console.log('Atualizar nota:', noteToUpdate) // Placeholder
-  closeModal()
+  // ANTES: console.log('Atualizar nota:', noteToUpdate)
+  // AGORA:
+  noteStore.updateNoteAction(noteToUpdate);
+  closeEditModal()
+}
+
+function handleCreateNote(newNoteData: Omit<Note, 'id'>) {
+  // ANTES: console.log('Criar nova nota:', newNoteData)
+  // AGORA:
+  noteStore.createNoteAction(newNoteData);
+  closeCreateModal()
 }
 
 onMounted(() => {
@@ -46,32 +100,144 @@ onMounted(() => {
 
 <template>
   <div class="home">
-    <h2>Minhas Anotações</h2>
-    <div v-if="loading">Carregando anotações...</div>
+  
+    <button @click="openCreateModal" class="add-note-button" aria-label="Criar nova nota">
+      <AddIcon class="add-icon" />
+    </button>
 
-    <div v-else class="notes-grid">
-      <NoteCard
-        v-for="note in notes"
-        :key="note.id"
-        :title="note.title"
-        @view="openModal(note)"
-      />
-      <p v-if="notes.length === 0">Nenhuma anotação encontrada.</p>
+    <div class="notes-container">
+      <div v-if="loading" class="loading-message">Carregando anotações...</div>
+
+      <template v-else-if="notes.length > 0">
+        <div class="notes-display-area">
+          <button @click="prevPage" :disabled="currentPage === 1" class="nav-arrow">
+            <LeftIcon />
+          </button>
+
+          <NotesGrid :notes="paginatedNotes" @viewNote="openEditModal" />
+
+          <button @click="nextPage" :disabled="currentPage === totalPages" class="nav-arrow">
+            <RightIcon class="right-arrow" />
+          </button>
+        </div>
+
+        <div class="dot-indicators">
+          <span v-for="pageNumber in totalPages" :key="pageNumber" class="dot"
+            :class="{ 'active': pageNumber === currentPage }" @click="goToPage(pageNumber)"></span>
+        </div>
+      </template>
+
+      <p v-else class="no-notes-message">Nenhuma anotação encontrada.</p>
     </div>
   </div>
 
-  <NoteModal
-    :note="selectedNote"
-    @close="closeModal"
-    @delete="handleDeleteNote"
-    @update="handleUpdateNote"
-  />
+  <NoteFormModal v-if="isCreateModalOpen" @close="closeCreateModal" @create="handleCreateNote" />
+
+  <NoteFormModal v-if="selectedNote" :note-to-edit="selectedNote" @close="closeEditModal" @update="handleUpdateNote"
+    @delete="handleDeleteNote" />
 </template>
 
 <style scoped>
-.notes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+.home {
+  margin-top: 10rem;
+}
+
+.home h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  /* Diminuí a margem para acomodar o botão */
+}
+
+/* MUDANÇA 2: O estilo .fab foi completamente substituído por este */
+.add-note-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+  width: 3rem;
+  margin: 0 auto 2rem auto;
+  /* Centraliza o botão e dá espaço abaixo */
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: transparent;
+   background-color: black;
+  color: white;
+
+}
+
+.add-note-button:hover {
+  background-color: rgb(29, 27, 27);
+  color: white;
+}
+.add-icon{
+  width: 3rem;
+  height: 3rem;
+}
+.notes-container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.notes-display-area {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 20px;
+}
+
+.nav-arrow {
+  background: none;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-arrow:hover:not(:disabled) {
+  background-color: #f0f0f0;
+}
+
+.nav-arrow:disabled {
+  cursor: not-allowed;
+  opacity: 0.3;
+}
+
+.right-arrow {
+  color: black;
+}
+
+.dot-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #d9d9d9;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dot.active {
+  background-color: #007bff;
+}
+
+.loading-message,
+.no-notes-message {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2rem;
+  color: #666;
 }
 </style>

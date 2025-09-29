@@ -11,7 +11,7 @@ const emit = defineEmits(['view'])
 
 <template>
   <div class="note-card" @click="emit('view')">
-    <h3>{{ title }}</h3>
+    <h3 class="card-title">{{ title }}</h3>
   </div>
 </template>
 
@@ -24,18 +24,23 @@ const emit = defineEmits(['view'])
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
-  height: 150px; /* Altura fixa para formar o grid */
+  height: 150px;
+  /* Altura fixa para formar o grid */
   display: flex;
   align-items: center;
   justify-content: center;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .note-card:hover {
   transform: translateY(-5px);
+  
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.note-card h3 {
+.card-title{
   margin: 0;
   font-size: 1.1rem;
   text-align: center;
