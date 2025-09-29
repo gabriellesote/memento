@@ -144,10 +144,6 @@ Este passo é essencial! O arquivo .env é usado para configurar o nome do seu b
 Você pode usar o seguinte comando no seu terminal para fazer a cópia :
 </p>
 
-
-
-Bash
-
 ## No Linux ou macOS
 ```bash
 cp .env.example .env
