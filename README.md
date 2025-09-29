@@ -234,31 +234,37 @@ npm run start:dev
 
 Abra um **novo terminal** na pasta do projeto.
 
-1.  **Navegue até a pasta do frontend:**
-    ```bash
+ **Navegue até a pasta do frontend:**
+
+  ```bash
     cd frontend
-    ```
+  ```
 
-2.  **Instale as dependências:**
-    ```bash
+  **Instale as dependências:**
+
+  ```bash
     npm install
-    ```
+  ```
 
-3.  **Configure as Variáveis de Ambiente:**
-    Crie um arquivo chamado `.env.local` na raiz da pasta `frontend/` e adicione a seguinte variável:
-    ```
+  ### ⚠️ Crie o arquivo de variáveis de ambiente (Passo Importante):
+
+  Crie um arquivo chamado `.env.local` na raiz da pasta `frontend/` e adicione a seguinte variável:
+
+  ```
     VITE_API_URL=http://localhost:3000
-    ```
+  ```
 
-4.  **Inicie o servidor de desenvolvimento:**
-    ```bash
+  **Inicie o servidor de desenvolvimento:**
+
+  ```bash
     npm run dev
-    ```
+  ```
+
     ✅ A aplicação estará disponível no seu navegador em `http://localhost:5173` (ou na porta indicada pelo Vite).
 
 ---
 
-## ▶️ Aplicação em Funcionamento
+##   Aplicação em Funcionamento
 
 Com os dois terminais rodando (um para o backend e um para o frontend), acesse `http://localhost:5173` no seu navegador para usar o **Memento**!
   
