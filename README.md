@@ -27,7 +27,12 @@ As especificações técnicas obrigatórias para o desenvolvimento foram:
 -   ✅ Exclusão de anotações com confirmação.
 -   ✅ Interface de usuário limpa, reativa e intuitiva.
 
-## ⚙️ Tecnologias e Ferramentas
+
+<details>
+<summary> <h2>⚙️ Tecnologias e Ferramentas </h2>
+
+</summary>
+
 
 <div align="center">
   <a href="https://skillicons.dev">
@@ -59,6 +64,9 @@ As especificações técnicas obrigatórias para o desenvolvimento foram:
 -   **Versionamento:** [Git](https://git-scm.com/) & [GitHub](https://github.com)
 -   **Metodologia:** [Git Flow](https://www.atlassian.com/br/git/tutorials/comparing-workflows/gitflow-workflow)
 -   **Testes de API:** [Postman](https://www.postman.com/)
+
+</details>
+
 
 ## 📁 Estrutura do Projeto
 
