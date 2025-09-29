@@ -25,6 +25,7 @@ lerna-debug.log*
 .env.local
 .env.*.local
 *.local
+.env
 
 # Arquivos de teste e cobertura de código
 /coverage/
