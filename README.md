@@ -158,25 +158,199 @@ memento/
 
 
  <details>
-   <summary> <h2> 📍 Endpoints</h2></summary>
+<summary> <h2> 📍 Endpoints</h2></summary>
 
-  ### URL Base:  `http://localhost:3000 `
+### 🔗 URL Base: `http://localhost:3000`
 
-  ### Resumo Rápido
+### 📋 Resumo Rápido
 
-| Método HTTP | Endpoint       | Descrição                              |
+| Método HTTP | Endpoint       | Descrição                                |
 | :---------- | :------------- | :--------------------------------------- |
-| `POST`      | `/notes`       | Cria uma nova anotação.                  |
-| `GET`       | `/notes`       | Lista todas as anotações.                |
-| `GET`       | `/notes/:id`   | Busca uma anotação específica por ID.    |
-| `PATCH`       | `/notes/:id`   | Atualiza uma anotação existente por ID.  |
-| `DELETE`    | `/notes/:id`   | Deleta uma anotação por ID.              |
+| `POST`      | `/notes`       | Cria uma nova anotação.                  |
+| `GET`       | `/notes`       | Lista todas as anotações.                |
+| `GET`       | `/notes/:id`   | Busca uma anotação específica por ID.    |
+| `PATCH`       | `/notes/:id`   | Atualiza uma anotação existente por ID.|
+| `DELETE`    | `/notes/:id`   | Deleta uma anotação por ID.              |
+
 
 ----
 
+# 📖 Detalhes dos Endpoints
 
- 
- </details>
+## 📥 `POST /notes`
+
+Cria uma nova anotação.
+
+####  📋 Body (Corpo da Requisição): `application/json`
+
+|Campo|	Tipo|	Obrigatório|	Descrição|
+|-----|-----|------------|-----------|
+|title| string|Sim	|O título da anotação.|
+|content	|string|	Sim|	O conteúdo da anotação.|
+
+
+
+#### Exemplo de Requisição (JSON):
+
+```JSON
+
+{
+  "title": "Minha Primeira Anotação",
+  "content": "Este é o conteúdo da anotação criada via API."
+}
+```
+### ⚡ Respostas:
+
+#### 🟢 201 Created: Sucesso. Retorna a anotação recém-criada:
+
+```JSON
+
+{
+  "id": "clxqz5k4p0000qjpf6zjd9f7a",
+  "title": "Minha Primeira Anotação",
+  "content": "Este é o conteúdo da anotação criada via API.",
+  "createdAt": "2025-09-29T18:50:00.000Z"
+}
+```
+#### 🔴 400 Bad Request: Erro de validação (ex: título em branco).
+
+```JSON
+
+{
+  "statusCode": 400,
+  "message": [
+    "title should not be empty"
+  ],
+  "error": "Bad Request"
+}
+```
+---
+## 📤 `GET /notes`
+Lista todas as anotações existentes.
+
+### ⚡ Respostas:
+
+### 🟢200 OK: Sucesso. Retorna um array com todas as anotações.
+
+```JSON
+
+[
+  {
+    "id": "clxqz5k4p0000qjpf6zjd9f7a",
+    "title": "Minha Primeira Anotação",
+    "content": "Este é o conteúdo da anotação criada via API.",
+    "createdAt": "2025-09-29T18:50:00.000Z",
+  },
+  {
+    "id": "clxqz7b9c0001qjpfh3a7b9z0",
+    "title": "Outra Anotação",
+    "content": "Conteúdo da segunda nota.",
+    "createdAt": "2025-09-29T18:52:00.000Z",
+  }
+]
+```
+--- 
+
+## 🔎 `GET /notes/:id`
+Busca uma anotação específica pelo seu ID.
+
+####  📋 Parâmetros de URL (Path Parameters):
+
+|Parâmetro	|Tipo	|Descrição|
+|-----------|-----|----------|
+|id|	string	|O ID único da anotação.|
+
+
+## ⚡ Respostas:
+
+### 🟢 200 OK: Sucesso. Retorna o objeto da anotação encontrada.
+
+```JSON
+
+{
+  "id": "clxqz5k4p0000qjpf6zjd9f7a",
+  "title": "Minha Primeira Anotação",
+  "content": "Este é o conteúdo da anotação criada via API.",
+  "createdAt": "2025-09-29T18:50:00.000Z",
+}
+```
+
+### 🔴 404 Not Found: A anotação com o ID fornecido não foi encontrada.
+
+```JSON
+
+{
+  "statusCode": 404,
+  "message": "Note with id clxqz5k4p0000qjpf6zjd9f7a not found",
+  "error": "Not Found"
+}
+```
+---
+
+##  📝`PATCH /notes/:id`
+
+Atualiza uma anotação existente. Permite a atualização parcial (apenas os campos enviados serão atualizados).
+
+#### 📋 Parâmetros de URL (Path Parameters):
+
+|Parâmetro	|Tipo	|Descrição|
+|-----------|-----|---------|
+|id	|string	|O ID único da anotação a ser atualizada.|
+
+
+#### 📋 Body (Corpo da Requisição): application/json
+
+|Campo|	Tipo	|Obrigatório|Descrição|
+|-----|-------|-----------|----------|
+|title	|string	|Não	|O novo título da anotação.|
+|content	|string	|Não|	O novo conteúdo da anotação.|
+
+
+### Exemplo de Requisição (JSON):
+
+```JSON
+
+{
+  "title": "Meu Título Atualizado"
+}
+```
+## ⚡ Respostas:
+
+### 🟢  200 OK: Sucesso. Retorna a anotação com os dados atualizados.
+
+```JSON
+
+ {
+  "id": "clxqz5k4p0000qjpf6zjd9f7a",
+  "title": "Meu Título Atualizado",
+  "content": "Este é o conteúdo da anotação criada via API.",
+  "createdAt": "2025-09-29T18:50:00.000Z",
+  "updatedAt": "2025-09-29T19:15:00.000Z"
+}
+```
+### 🔴 404 Not Found: A anotação com o ID fornecido não foi encontrada.
+---
+
+## 🗑️ `DELETE /notes/:id`
+
+Deleta uma anotação específica pelo seu ID.
+
+📋 Parâmetros de URL (Path Parameters):
+
+|Parâmetro|	Tipo	|Descrição|
+|---------|-------|---------|
+|id|	string	|O ID único da anotação a ser deletada.|
+
+
+## ⚡ Respostas:
+
+### 🟢 204 No Content: Sucesso. A anotação foi deletada. Nenhum corpo de resposta é retornado.
+
+### 🔴 404 Not Found: A anotação com o ID fornecido não foi encontrada.
+
+</details>
+
+
 
 
 
