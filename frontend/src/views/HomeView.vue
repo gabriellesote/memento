@@ -203,7 +203,7 @@ onMounted(() => {
 .nav-arrow:hover:not(:disabled) {
   background-color: #F5D2D2;
   .right-arrow, .left-arrow{
-    color: #A3CCDA;
+    color: #86A788;
   }
 }
 
