@@ -264,7 +264,7 @@ Abra um **novo terminal** na pasta do projeto.
 
 ---
 
-##   Aplicação em Funcionamento
+##   🚀 Aplicação em Funcionamento
 
 Com os dois terminais rodando (um para o backend e um para o frontend), acesse `http://localhost:5173` no seu navegador para usar o **Memento**!
   
