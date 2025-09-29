@@ -69,9 +69,9 @@ function handleCancel() {
         </div>
       </div>
 
-      <div v-else>
-        <input type="text" v-model="editableNote.title" placeholder="Título" />
-        <textarea v-model="editableNote.content" placeholder="Conteúdo" rows="10"></textarea>
+      <div v-else class="edit-mode">
+        <input type="text" v-model="editableNote.title" placeholder="Título"  class="edit-title"/>
+        <textarea v-model="editableNote.content" placeholder="Conteúdo" rows="10" maxlength="999" class="edit-content"></textarea>
         <div class="footer edit-actions">
           <button @click="handleCancel" aria-label="Cancelar alterações" class="cancel-button">
             <CancelIcon class="cancel-icon" />
@@ -108,6 +108,7 @@ function handleCancel() {
   position: relative;
 }
 
+
 .close-button {
   position: absolute;
   top: 10px;
@@ -122,7 +123,14 @@ function handleCancel() {
 .note-body {
   white-space: pre-wrap;
   margin: 20px 0;
-  min-height: fit-content;
+  min-height: 350px;
+}
+.edit-mode{
+   display: flex;
+    
+   flex-direction: column;
+   min-height: 650px;
+
 }
 
 .footer {
@@ -163,13 +171,24 @@ function handleCancel() {
 input[type='text'],
 textarea {
   width: 100%;
+ 
   padding: 10px;
   border-radius: 4px;
   border: 1px solid #ccc;
   font-size: 1rem;
+  text-align: justify;
   margin-bottom: 15px;
+  resize: none;
 }
 
+.edit-title{
+  margin-top: 25px;
+}
+
+.edit-content{
+  flex-grow: 1;
+  margin-bottom: 25px;
+}
 input[type='text'] {
   font-size: 1.5rem;
   font-weight: bold;
