@@ -67,11 +67,52 @@ As especificações técnicas obrigatórias para o desenvolvimento foram:
 ### Backend (`/backend`)
 
 ```
+memento/
+├─ backend/
+│  ├─ src/
+│  │  ├─ config/
+│  │  │  ├─ database.config.ts
+│  │  ├─ notes/
+│  │  │  ├─ dto/
+│  │  │  │  ├─ create-note.dto.ts
+│  │  │  │  ├─ update-note.dto.ts
+│  │  │  ├─ entities/
+│  │  │  │  ├─ note.entity.ts
+│  │  │  ├─ notes.controller.ts
+│  │  │  ├─ notes.module.ts
+│  │  │  ├─ notes.service.ts
+│  ├─ .env.example
+
 ```
 ### Frontend (`/frontend`)
 
 
 ```
+memento/
+├─ frontend/
+│  ├─ public/
+│  ├─ src/
+│  │  ├─ assets/
+│  │  ├─ components/
+│  │  │  ├─ Card.vue
+│  │  │  ├─ NoteFormModal.vue
+│  │  │  ├─ NotesGrid.vue
+│  │  ├─ router/
+│  │  │  ├─ index.ts
+│  │  ├─ services/
+│  │  │  ├─ api.ts
+│  │  │  ├─ noteService.ts
+│  │  ├─ stores/
+│  │  │  ├─ noteStore.ts
+│  │  ├─ types/
+│  │  │  ├─ Notes.ts
+│  │  ├─ views/
+│  │  │  ├─ HomeView.vue
+│  │  ├─ App.vue
+│  │  ├─ main.ts
+│  ├─ .env.example
+│  ├─ index.html
+
 ```
   
 </details>
@@ -82,6 +123,20 @@ As especificações técnicas obrigatórias para o desenvolvimento foram:
    <summary> <h2> 📍 Endpoints</h2></summary>
 
   ### URL Base:  `http://localhost:3000 `
+
+  ### Resumo Rápido
+
+| Método HTTP | Endpoint       | Descrição                              |
+| :---------- | :------------- | :--------------------------------------- |
+| `POST`      | `/notes`       | Cria uma nova anotação.                  |
+| `GET`       | `/notes`       | Lista todas as anotações.                |
+| `GET`       | `/notes/:id`   | Busca uma anotação específica por ID.    |
+| `PATCH`       | `/notes/:id`   | Atualiza uma anotação existente por ID.  |
+| `DELETE`    | `/notes/:id`   | Deleta uma anotação por ID.              |
+
+----
+
+
  
  </details>
 
