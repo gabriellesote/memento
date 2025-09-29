@@ -18,15 +18,7 @@ As especificações técnicas obrigatórias para o desenvolvimento foram:
 -   **Backend:** NestJS.
 -   **Banco de Dados:** Um banco de dados local.
 
-## ✨ Features
-
--   ✅ Listagem de anotações com sistema de paginação.
--   ✅ Criação de novas anotações através de um formulário modal.
--   ✅ Visualização detalhada de cada anotação.
--   ✅ Edição do título e conteúdo de anotações existentes.
--   ✅ Exclusão de anotações com confirmação.
--   ✅ Interface de usuário limpa, reativa e intuitiva.
-
+---
 
 <details>
 <summary> <h2>⚙️ Tecnologias e Ferramentas </h2>
@@ -68,8 +60,12 @@ As especificações técnicas obrigatórias para o desenvolvimento foram:
 </details>
 
 
-## 📁 Estrutura do Projeto
+<details>
+  <summary>
+    <h2> 📁 Estrutura do Projeto </h2>
+  </summary>
 
+ 
 ### Backend (`/backend`)
 
 ```
@@ -79,13 +75,31 @@ As especificações técnicas obrigatórias para o desenvolvimento foram:
 
 ```
 ```
+  
+</details>
 
 
-## 🚀 Começando
+
+ <details>
+   <summary> <h2> 📍 Endpoints</h2></summary>
+
+  ### URL Base:  `http://localhost:3000 `
+ 
+ </details>
+
+
+
+
+
+<details>
+  <summary>
+    <h2> 🚀 Rodando a Aplicação </h2>
+  </summary>
+
 
 Para rodar a aplicação completa (Backend e Frontend) localmente, siga os passos abaixo.
 
-### Pré-requisitos
+### ⚙️ Pré-requisitos
 
 É necessário ter as seguintes ferramentas instaladas na sua máquina:
 
@@ -93,13 +107,14 @@ Para rodar a aplicação completa (Backend e Frontend) localmente, siga os passo
 -   📦 **npm** (geralmente instalado junto com o Node.js)
 -   🐙 **Git**
 
-### Instalação
+### 📌 Instalação
 
-1.  **Clone o repositório:**
-    ```bash
-    git clone https://github.com/gabriellesote/memento.git
-    cd memento
-    ```
+ **Clone o repositório:**
+
+  ```bash
+  git clone https://github.com/gabriellesote/memento.git
+  cd memento
+  ```
    
 
 ---
@@ -197,6 +212,10 @@ Abra um **novo terminal** na pasta do projeto.
 ## ▶️ Aplicação em Funcionamento
 
 Com os dois terminais rodando (um para o backend e um para o frontend), acesse `http://localhost:5173` no seu navegador para usar o **Memento**!
+  
+</details>
+
+
 
 
 
