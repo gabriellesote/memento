@@ -111,7 +111,7 @@ onMounted(() => {
       <template v-else-if="notes.length > 0">
         <div class="notes-display-area">
           <button @click="prevPage" :disabled="currentPage === 1" class="nav-arrow">
-            <LeftIcon />
+            <LeftIcon class="left-arrow"/>
           </button>
 
           <NotesGrid :notes="paginatedNotes" @viewNote="openEditModal" />
@@ -157,17 +157,17 @@ onMounted(() => {
   width: 3rem;
   margin: 0 auto 2rem auto;
   /* Centraliza o botão e dá espaço abaixo */
-  border: none;
+  border: 1px dashed black;
   border-radius: 50%;
   cursor: pointer;
   background-color: transparent;
-   background-color: black;
+   background-color: #86A788;
   color: white;
 
 }
 
 .add-note-button:hover {
-  background-color: rgb(29, 27, 27);
+  background-color: rgb(136, 173, 142);
   color: white;
 }
 .add-icon{
@@ -197,11 +197,14 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease-in-out;
+  transition: all .26s ease-in-out;
 }
 
 .nav-arrow:hover:not(:disabled) {
-  background-color: #f0f0f0;
+  background-color: #F5D2D2;
+  .right-arrow, .left-arrow{
+    color: #A3CCDA;
+  }
 }
 
 .nav-arrow:disabled {
@@ -209,10 +212,7 @@ onMounted(() => {
   opacity: 0.3;
 }
 
-.right-arrow {
-  color: black;
-}
-
+ 
 .dot-indicators {
   display: flex;
   justify-content: center;
@@ -223,14 +223,16 @@ onMounted(() => {
 .dot {
   width: 12px;
   height: 12px;
+  border: 1px dashed black;
   border-radius: 50%;
-  background-color: #d9d9d9;
+  background-color: #FFCFCF;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .dot.active {
-  background-color: #007bff;
+  background-color: #BDE3C3;
+   
 }
 
 .loading-message,

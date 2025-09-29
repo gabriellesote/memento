@@ -17,8 +17,8 @@ const emit = defineEmits(['view'])
 
 <style scoped>
 .note-card {
-  background-color: #f9f9f9;
-  border: 1px solid #e0e0e0;
+  background-color: #FFE2E2;
+  border: 2px dashed black;
   border-radius: 8px;
   padding: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);

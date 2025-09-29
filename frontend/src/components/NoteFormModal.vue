@@ -14,6 +14,23 @@ const props = defineProps<{
   noteToEdit?: Note | null
 }>()
 
+const formattedCreatedAt = computed(() => {
+  // Se não houver nota ou data, não retorna nada
+  if (!props.noteToEdit?.createdAt) {
+    return ''
+  }
+
+  // Cria um objeto Date a partir da string da API
+  const date = new Date(props.noteToEdit.createdAt)
+
+  // Extrai as partes da data
+  const day = String(date.getDate()).padStart(2, '0') // Adiciona um '0' à esquerda se for menor que 10
+  const month = String(date.getMonth() + 1).padStart(2, '0') // Meses começam do 0, então somamos 1
+  const year = String(date.getFullYear()).slice(-2) // Pega os dois últimos dígitos do ano
+
+  // Retorna a string no formato desejado
+  return `${day}/${month}/${year}`
+})
 // Definimos todos os eventos que o componente pode emitir para o pai (HomeView)
 const emit = defineEmits(['close', 'create', 'update', 'delete'])
 
@@ -73,24 +90,37 @@ function handleCancel() {
 
       <div v-if="isEditMode && !isEditing">
         <h2>{{ noteToEdit?.title }}</h2>
+
         <p class="note-body">{{ noteToEdit?.content }}</p>
         <div class="footer">
+
           <div class="actions">
-            <button @click="isEditing = true" aria-label="Editar nota"><EditIcon /></button>
-            <button @click="emit('delete', noteToEdit?.id)" aria-label="Apagar nota"><TrashIcon /></button>
+            <button @click="isEditing = true" aria-label="Editar nota">
+              <EditIcon class="edit-icon" />
+            </button>
+            <span class="creation-date">Criado em: {{ formattedCreatedAt }}</span>
+            <button @click="emit('delete', noteToEdit?.id)" aria-label="Apagar nota">
+              <TrashIcon class="trash-icon" />
+            </button>
           </div>
+
         </div>
       </div>
 
       <div v-else class="edit-mode">
-        <h2>{{ isEditMode ? 'Editar Anotação' : 'Criar Nova Anotação' }}</h2>
 
-        <input type="text" v-model="editableNote.title" placeholder="Título" class="edit-title"/>
-        <textarea v-model="editableNote.content" placeholder="Conteúdo" rows="10" maxlength="999" class="edit-content"></textarea>
-        
+
+        <input type="text" v-model="editableNote.title" placeholder="Título" class="edit-title" />
+        <textarea v-model="editableNote.content" placeholder="Conteúdo" rows="10" maxlength="999"
+          class="edit-content"></textarea>
+
         <div class="footer edit-actions">
-          <button @click="handleCancel" aria-label="Cancelar" class="cancel-button"><CancelIcon /></button>
-          <button @click="handleSubmit" aria-label="Salvar" class="accept-button"><AcceptIcon /></button>
+          <button @click="handleCancel" aria-label="Cancelar" class="cancel-button">
+            <CancelIcon />
+          </button>
+          <button @click="handleSubmit" aria-label="Salvar" class="accept-button">
+            <AcceptIcon />
+          </button>
         </div>
       </div>
     </div>
@@ -104,7 +134,7 @@ function handleCancel() {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.767);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -112,19 +142,19 @@ function handleCancel() {
 }
 
 .modal-content {
-  background-color: white;
+  background-color: #FFF7F1;
   padding: 30px;
   border-radius: 8px;
   width: 90%;
   max-width: 600px;
   position: relative;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .close-button {
   position: absolute;
   top: 10px;
-  right: 15px;
+  right: 5px;
   background: none;
   border: none;
   font-size: 1.5rem;
@@ -136,7 +166,8 @@ function handleCancel() {
 .note-body {
   white-space: pre-wrap;
   margin: 20px 0;
-  min-height: 250px; /* Ajuste conforme necessário */
+  min-height: 250px;
+  /* Ajuste conforme necessário */
   max-height: 60vh;
   overflow-y: auto;
   line-height: 1.6;
@@ -155,15 +186,21 @@ function handleCancel() {
 
 .footer {
   display: flex;
-  justify-content: flex-end;
+
+  justify-content: center;
   align-items: center;
   padding-top: 20px;
   border-top: 1px solid #eee;
+  background-color: none;
 }
 
 .actions {
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   gap: 15px;
+  width: 100%;
 }
 
 .actions button {
@@ -191,14 +228,17 @@ textarea {
   border-radius: 4px;
   border: 1px solid #ccc;
   font-size: 1rem;
+
   margin-bottom: 15px;
   resize: vertical;
-  box-sizing: border-box; /* Garante que padding não afete a largura total */
+  box-sizing: border-box;
+  /* Garante que padding não afete a largura total */
 }
 
 .edit-title {
   font-size: 1.5rem;
   font-weight: bold;
+  margin-top: 25px;
 }
 
 .edit-content {
@@ -219,11 +259,22 @@ textarea {
   cursor: pointer;
 }
 
+.edit-icon {
+  color: #78bbd1;
+}
+
+.trash-icon {
+  color: #d46363;
+}
+
+
 .cancel-button {
-  color: #D32F2F; /* Vermelho */
+  color: #D32F2F;
+  /* Vermelho */
 }
 
 .accept-button {
-  color: #388E3C; /* Verde */
+  color: #388E3C;
+  /* Verde */
 }
 </style>
