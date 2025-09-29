@@ -1,6 +1,16 @@
 <div align="center">
   <img src="https://github.com/gabriellesote/memento/blob/main/assets_readme/banner_memento.png" alt="Banner do projeto escrito 'memento'"/>
 </div>
+ <h4 align="center"> <em> Candidata: Gabrielle Soares Teixeira </em></h4>
+<div align=center> 
+
+[![Github](https://img.shields.io/badge/Github-pink?style=for-the-badge&logo=github&logoColor=black)](https://github.com/gabriellesote?tab=repositories)
+[![Linkedin](https://img.shields.io/badge/Linkedin-0e76a8?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/gabrielle-teixeira-a9624329a/)
+[![Artístico](https://img.shields.io/badge/Artístico-833AB4?style=for-the-badge&logo=instagram)](https://www.instagram.com/ga_baralou/)
+[![pessoal](https://img.shields.io/badge/pessoal-5B51D8?style=for-the-badge&logo=instagram)](https://www.instagram.com/gabi.sote/)
+![gabrielle.sote@gmail.com](https://img.shields.io/badge/gabrielle.sote%40gmail.com-black?style=for-the-badge&logo=gmail&logoColor=red)
+</div>
+
 
 ## 🎯 Sobre o Projeto
 
@@ -482,7 +492,12 @@ Com os dois terminais rodando (um para o backend e um para o frontend), acesse `
   
 </details>
 
+ 
+<div align=center>
+  <h4>  ₊‧°𐐪♡𐑂°‧₊ <em>  Obrigada! </em> ₊‧°𐐪♡𐑂°‧₊</h4>
+  
 
+</div>
 
 
 
