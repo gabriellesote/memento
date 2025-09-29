@@ -3,20 +3,33 @@
 
 ## Sobre o Projeto
 
+<p>
+
 Memento é um projeto desenvolvido como parte do desafio técnico para o processo seletivo da empresa Corporate Web.
 
 O desafio consiste em desenvolver uma aplicação web com um CRUD completo (Criar, Ler, Editar e Deletar) para gerenciar anotações. O projeto engloba tanto o desenvolvimento do backend quanto do frontend.
 
 As especificações técnicas obrigatórias para o desenvolvimento foram:
 
-Frontend: React ou Vue.
+- Frontend: React ou Vue.
+- Backend: NestJS.
+- Banco de Dados: Um banco de dados local.
+  
+</p>
 
-Backend: NestJS.
 
-Banco de Dados: Um banco de dados local.
-## Tecnologias e Ferramentas Utilizadas
 
-Este projeto foi construído com um conjunto de tecnologias modernas e eficientes para o ecossistema Node.js:
+
+## ⚙️ Tecnologias e Ferramentas Utilizadas
+
+<div align=center>
+
+ [![My Skills](https://skillicons.dev/icons?i=git,github,npm,postman,ts,vue,nestjs,nodejs,sqlite	)](https://skillicons.dev)
+
+  
+</div>
+
+
 
   - **Backend:**
       - **Framework:** [NestJS](https://nestjs.com/)
@@ -24,17 +37,13 @@ Este projeto foi construído com um conjunto de tecnologias modernas e eficiente
   - **Banco de Dados:**
       - **SGBD:** [SQLite](https://www.sqlite.org/index.html) (Banco de dados local baseado em arquivo)
       - **ORM:** [TypeORM](https://typeorm.io/)
-  - **Validação e Serialização:**
-      - `class-validator`
-      - `class-transformer`
   - **Ambiente e Configuração:**
       - **Runtime:** [Node.js](https://nodejs.org/)
       - **Gerenciador de Pacotes:** [npm](https://www.npmjs.com/)
-      - **Variáveis de Ambiente:** `@nestjs/config` (utilizando arquivos `.env`)
   - **Ferramentas e Metodologias:**
       - **Versionamento de Código:** [Git](https://git-scm.com/)
       - **Metodologia de Branches:** [Git Flow](https://www.atlassian.com/br/git/tutorials/comparing-workflows/gitflow-workflow)
-      - **Testes de API:** [Postman](https://www.postman.com/) / [Insomnia](https://insomnia.rest/)
+      - **Testes de API:** [Postman](https://www.postman.com/)
 
 ## Começando
 
