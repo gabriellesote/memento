@@ -98,23 +98,63 @@ Para rodar a aplicação completa (Backend e Frontend) localmente, siga os passo
 
 ### 🔥 Rodando o Backend (API)
 
+<p>
 Abra um terminal na pasta do projeto.
 
-1.  **Navegue até a pasta do backend:**
-    ```bash
-    cd backend
-    ```
+Navegue até a pasta do backend:
 
-2.  **Instale as dependências:**
-    ```bash
-    npm install
-    ```
+</p>
 
-3.  **Inicie o servidor de desenvolvimento:**
-    ```bash
-    npm run start:dev
-    ```
-    ✅ O servidor da API estará rodando em `http://localhost:3000`. Deixe este terminal aberto.
+```bash
+cd backend
+```
+
+ 
+### ⚠️ Crie o arquivo de variáveis de ambiente (Passo Importante):
+ 
+<p>
+
+Crie uma cópia do arquivo .env.example e renomeie-a para .env.
+
+Este passo é essencial! O arquivo .env é usado para configurar o nome do seu banco de dados e outras informações sensíveis. Sem ele, o backend não irá rodar apropriadamente.
+
+Você pode usar o seguinte comando no seu terminal para fazer a cópia :
+</p>
+
+
+
+Bash
+
+## No Linux ou macOS
+```bash
+cp .env.example .env
+```
+
+
+## No Windows
+
+```bash
+copy .env.example .env
+```
+
+<p>
+Após criar o arquivo, você pode abri-lo e alterar o nome do banco de dados, se desejar.
+
+
+</p>
+
+### Instale as dependências:
+```bash
+npm install
+```
+
+### Inicie o servidor de desenvolvimento:
+
+```bash
+npm run start:dev
+```
+
+✅ O servidor da API estará rodando em http://localhost:3000. Deixe este terminal aberto.
 
 ---
 
