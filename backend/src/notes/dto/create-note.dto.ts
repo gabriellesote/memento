@@ -5,7 +5,7 @@ import { IsNotEmpty, IsString, MaxLength, Matches , MinLength} from 'class-valid
 export class CreateNoteDto {
   @IsString({ message: 'O título deve ser um texto.' })
   @IsNotEmpty({ message: 'O título não pode ser vazio.' })
-  @MaxLength(30, { message: 'O título não pode ter mais de 30 caracteres.' })
+  @MaxLength(20, { message: 'O título não pode ter mais de 30 caracteres.' })
   @Matches(/.*[\p{L}\p{N}].*/u, { // <-- MUDANÇA AQUI
     message: 'O título deve conter pelo menos uma letra ou um número.', // <-- E AQUI
   })
