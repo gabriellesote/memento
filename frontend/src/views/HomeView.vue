@@ -1,3 +1,5 @@
+// src/views/HomeView.vue
+
 <script setup lang="ts">
 import { onMounted, ref, computed } from 'vue'
 import { storeToRefs } from 'pinia'
@@ -18,8 +20,11 @@ const noteStore = useNoteStore()
 const { notes, loading } = storeToRefs(noteStore)
 
 // --- CONTROLE DOS MODAIS ---
-const selectedNote = ref<Note | null>(null) // Para edição
-const isCreateModalOpen = ref(false)         // Para criação
+const selectedNote = ref<Note | null>(null)
+const isCreateModalOpen = ref(false)
+
+// Estado para guardar os erros de validação vindos da API
+const apiErrors = ref<{ title?: string; content?: string } | null>(null)
 
 // --- LÓGICA DA PAGINAÇÃO ---
 const currentPage = ref(1)
@@ -59,6 +64,7 @@ function openEditModal(note: Note) {
 
 function closeEditModal() {
   selectedNote.value = null
+  apiErrors.value = null // Limpa os erros ao fechar
 }
 
 function openCreateModal() {
@@ -67,37 +73,51 @@ function openCreateModal() {
 
 function closeCreateModal() {
   isCreateModalOpen.value = false
+  apiErrors.value = null // Limpa os erros ao fechar
+}
+
+function clearSpecificError(fieldName: 'title' | 'content') {
+  if (apiErrors.value && apiErrors.value[fieldName]) {
+    apiErrors.value[fieldName] = undefined;
+  }
 }
 
 // --- HANDLERS DE EVENTOS DO MODAL ---
 function handleDeleteNote(noteId: string) {
   if (confirm('Tem certeza que deseja apagar esta nota?')) {
-    // ANTES: console.log('Deletar nota:', noteId)
-    // AGORA:
     noteStore.deleteNoteAction(noteId);
     closeEditModal()
   }
 }
 
-function handleUpdateNote(noteToUpdate: Note) {
-  // ANTES: console.log('Atualizar nota:', noteToUpdate)
-  // AGORA:
-  noteStore.updateNoteAction(noteToUpdate);
-  closeEditModal()
+async function handleUpdateNote(noteToUpdate: Note) {
+  apiErrors.value = null
+  const result = await noteStore.updateNoteAction(noteToUpdate);
+  
+  if (result.success) {
+    closeEditModal()
+  } else {
+    // CORREÇÃO APLICADA AQUI
+    apiErrors.value = result.errors ?? null
+  }
 }
 
-function handleCreateNote(newNoteData: Omit<Note, 'id'>) {
-  // ANTES: console.log('Criar nova nota:', newNoteData)
-  // AGORA:
-  noteStore.createNoteAction(newNoteData);
-  closeCreateModal()
+async function handleCreateNote(newNoteData: Omit<Note, 'id'>) {
+  apiErrors.value = null 
+  const result = await noteStore.createNoteAction(newNoteData);
+
+  if (result.success) {
+    closeCreateModal()
+  } else {
+    // CORREÇÃO APLICADA AQUI
+    apiErrors.value = result.errors ?? null
+  }
 }
 
 onMounted(() => {
   noteStore.fetchNotes()
 })
 </script>
-
 <template>
   <div class="home">
   
@@ -131,13 +151,27 @@ onMounted(() => {
     </div>
   </div>
 
-  <NoteFormModal v-if="isCreateModalOpen" @close="closeCreateModal" @create="handleCreateNote" />
+  <NoteFormModal 
+    v-if="isCreateModalOpen" 
+    :errors="apiErrors"
+    @close="closeCreateModal" 
+    @create="handleCreateNote"
+    @clear-error="clearSpecificError"
+  />
 
-  <NoteFormModal v-if="selectedNote" :note-to-edit="selectedNote" @close="closeEditModal" @update="handleUpdateNote"
-    @delete="handleDeleteNote" />
+  <NoteFormModal 
+    v-if="selectedNote" 
+    :note-to-edit="selectedNote"
+    :errors="apiErrors"
+    @close="closeEditModal" 
+    @update="handleUpdateNote"
+    @delete="handleDeleteNote" 
+    @clear-error="clearSpecificError"
+  />
 </template>
 
 <style scoped>
+/* Seu CSS continua igual */
 .home {
   margin-top: 10rem;
 }

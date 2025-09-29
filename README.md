@@ -2,8 +2,6 @@
   <img src="banner_memento.png" alt="Banner do projeto escrito 'memento'"/>
 </div>
 
-<h1 align="center">Memento 📝</h1>
-
 ## 🎯 Sobre o Projeto
 
 <p>
@@ -18,16 +16,13 @@ As especificações técnicas obrigatórias para o desenvolvimento foram:
 -   **Backend:** NestJS.
 -   **Banco de Dados:** Um banco de dados local.
 
-## ✨ Features
+---
 
--   ✅ Listagem de anotações com sistema de paginação.
--   ✅ Criação de novas anotações através de um formulário modal.
--   ✅ Visualização detalhada de cada anotação.
--   ✅ Edição do título e conteúdo de anotações existentes.
--   ✅ Exclusão de anotações com confirmação.
--   ✅ Interface de usuário limpa, reativa e intuitiva.
+<details>
+<summary> <h2>⚙️ Tecnologias e Ferramentas </h2>
 
-## ⚙️ Tecnologias e Ferramentas
+</summary>
+
 
 <div align="center">
   <a href="https://skillicons.dev">
@@ -60,24 +55,104 @@ As especificações técnicas obrigatórias para o desenvolvimento foram:
 -   **Metodologia:** [Git Flow](https://www.atlassian.com/br/git/tutorials/comparing-workflows/gitflow-workflow)
 -   **Testes de API:** [Postman](https://www.postman.com/)
 
-## 📁 Estrutura do Projeto
+</details>
 
+
+<details>
+  <summary>
+    <h2> 📁 Estrutura do Projeto </h2>
+  </summary>
+
+ 
 ### Backend (`/backend`)
 
 ```
+memento/
+├─ backend/
+│  ├─ src/
+│  │  ├─ config/
+│  │  │  ├─ database.config.ts
+│  │  ├─ notes/
+│  │  │  ├─ dto/
+│  │  │  │  ├─ create-note.dto.ts
+│  │  │  │  ├─ update-note.dto.ts
+│  │  │  ├─ entities/
+│  │  │  │  ├─ note.entity.ts
+│  │  │  ├─ notes.controller.ts
+│  │  │  ├─ notes.module.ts
+│  │  │  ├─ notes.service.ts
+│  ├─ .env.example
+
 ```
 ### Frontend (`/frontend`)
 
 
 ```
+memento/
+├─ frontend/
+│  ├─ public/
+│  ├─ src/
+│  │  ├─ assets/
+│  │  ├─ components/
+│  │  │  ├─ Card.vue
+│  │  │  ├─ NoteFormModal.vue
+│  │  │  ├─ NotesGrid.vue
+│  │  ├─ router/
+│  │  │  ├─ index.ts
+│  │  ├─ services/
+│  │  │  ├─ api.ts
+│  │  │  ├─ noteService.ts
+│  │  ├─ stores/
+│  │  │  ├─ noteStore.ts
+│  │  ├─ types/
+│  │  │  ├─ Notes.ts
+│  │  ├─ views/
+│  │  │  ├─ HomeView.vue
+│  │  ├─ App.vue
+│  │  ├─ main.ts
+│  ├─ .env.example
+│  ├─ index.html
+
 ```
+  
+</details>
 
 
-## 🚀 Começando
+
+ <details>
+   <summary> <h2> 📍 Endpoints</h2></summary>
+
+  ### URL Base:  `http://localhost:3000 `
+
+  ### Resumo Rápido
+
+| Método HTTP | Endpoint       | Descrição                              |
+| :---------- | :------------- | :--------------------------------------- |
+| `POST`      | `/notes`       | Cria uma nova anotação.                  |
+| `GET`       | `/notes`       | Lista todas as anotações.                |
+| `GET`       | `/notes/:id`   | Busca uma anotação específica por ID.    |
+| `PATCH`       | `/notes/:id`   | Atualiza uma anotação existente por ID.  |
+| `DELETE`    | `/notes/:id`   | Deleta uma anotação por ID.              |
+
+----
+
+
+ 
+ </details>
+
+
+
+
+
+<details>
+  <summary>
+    <h2> 🚀 Rodando a Aplicação </h2>
+  </summary>
+
 
 Para rodar a aplicação completa (Backend e Frontend) localmente, siga os passos abaixo.
 
-### Pré-requisitos
+### ⚙️ Pré-requisitos
 
 É necessário ter as seguintes ferramentas instaladas na sua máquina:
 
@@ -85,36 +160,73 @@ Para rodar a aplicação completa (Backend e Frontend) localmente, siga os passo
 -   📦 **npm** (geralmente instalado junto com o Node.js)
 -   🐙 **Git**
 
-### Instalação
+### 📌 Instalação
 
-1.  **Clone o repositório:**
-    ```bash
-    git clone https://github.com/gabriellesote/memento.git
-    cd memento
-    ```
+ **Clone o repositório:**
+
+  ```bash
+  git clone https://github.com/gabriellesote/memento.git
+  cd memento
+  ```
    
 
 ---
 
 ### 🔥 Rodando o Backend (API)
 
+<p>
 Abra um terminal na pasta do projeto.
 
-1.  **Navegue até a pasta do backend:**
-    ```bash
-    cd backend
-    ```
+Navegue até a pasta do backend:
 
-2.  **Instale as dependências:**
-    ```bash
-    npm install
-    ```
+</p>
 
-3.  **Inicie o servidor de desenvolvimento:**
-    ```bash
-    npm run start:dev
-    ```
-    ✅ O servidor da API estará rodando em `http://localhost:3000`. Deixe este terminal aberto.
+```bash
+cd backend
+```
+
+ 
+### ⚠️ Crie o arquivo de variáveis de ambiente (Passo Importante):
+ 
+<p>
+
+Crie uma cópia do arquivo .env.example e renomeie-a para .env.
+
+Este passo é essencial! O arquivo .env é usado para configurar o nome do seu banco de dados e outras informações sensíveis. Sem ele, o backend não irá rodar apropriadamente.
+
+Você pode usar o seguinte comando no seu terminal para fazer a cópia :
+</p>
+
+## No Linux ou macOS
+```bash
+cp .env.example .env
+```
+
+
+## No Windows
+
+```bash
+copy .env.example .env
+```
+
+<p>
+Após criar o arquivo, você pode abri-lo e alterar o nome do banco de dados, se desejar.
+
+
+</p>
+
+### Instale as dependências:
+```bash
+npm install
+```
+
+### Inicie o servidor de desenvolvimento:
+
+```bash
+npm run start:dev
+```
+
+✅ O servidor da API estará rodando em http://localhost:3000. Deixe este terminal aberto.
 
 ---
 
@@ -122,33 +234,43 @@ Abra um terminal na pasta do projeto.
 
 Abra um **novo terminal** na pasta do projeto.
 
-1.  **Navegue até a pasta do frontend:**
-    ```bash
+ **Navegue até a pasta do frontend:**
+
+  ```bash
     cd frontend
-    ```
+  ```
 
-2.  **Instale as dependências:**
-    ```bash
+  **Instale as dependências:**
+
+  ```bash
     npm install
-    ```
+  ```
 
-3.  **Configure as Variáveis de Ambiente:**
-    Crie um arquivo chamado `.env.local` na raiz da pasta `frontend/` e adicione a seguinte variável:
-    ```
+  ### ⚠️ Crie o arquivo de variáveis de ambiente (Passo Importante):
+
+  Crie um arquivo chamado `.env.local` na raiz da pasta `frontend/` e adicione a seguinte variável:
+
+  ```
     VITE_API_URL=http://localhost:3000
-    ```
+  ```
 
-4.  **Inicie o servidor de desenvolvimento:**
-    ```bash
+  **Inicie o servidor de desenvolvimento:**
+
+  ```bash
     npm run dev
-    ```
+  ```
+
     ✅ A aplicação estará disponível no seu navegador em `http://localhost:5173` (ou na porta indicada pelo Vite).
 
 ---
 
-## ▶️ Aplicação em Funcionamento
+##   Aplicação em Funcionamento
 
 Com os dois terminais rodando (um para o backend e um para o frontend), acesse `http://localhost:5173` no seu navegador para usar o **Memento**!
+  
+</details>
+
+
 
 
 

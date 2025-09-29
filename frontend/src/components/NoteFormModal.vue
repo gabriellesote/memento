@@ -12,70 +12,56 @@ import CloseIcon from '@/assets/icons/Close-icon.svg?component'
 // A prop 'noteToEdit' é opcional. Se ela não for passada, o componente entra em modo de criação.
 const props = defineProps<{
   noteToEdit?: Note | null
+  // NOVO: Prop para receber os erros de validação do componente pai
+  errors?: { title?: string; content?: string } | null
 }>()
 
 const formattedCreatedAt = computed(() => {
-  // Se não houver nota ou data, não retorna nada
   if (!props.noteToEdit?.createdAt) {
     return ''
   }
-
-  // Cria um objeto Date a partir da string da API
   const date = new Date(props.noteToEdit.createdAt)
-
-  // Extrai as partes da data
-  const day = String(date.getDate()).padStart(2, '0') // Adiciona um '0' à esquerda se for menor que 10
-  const month = String(date.getMonth() + 1).padStart(2, '0') // Meses começam do 0, então somamos 1
-  const year = String(date.getFullYear()).slice(-2) // Pega os dois últimos dígitos do ano
-
-  // Retorna a string no formato desejado
+  const day = String(date.getDate()).padStart(2, '0')
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const year = String(date.getFullYear()).slice(-2)
   return `${day}/${month}/${year}`
 })
-// Definimos todos os eventos que o componente pode emitir para o pai (HomeView)
-const emit = defineEmits(['close', 'create', 'update', 'delete'])
+
+// NOVO: Adicionamos 'clear-error' aos eventos que podem ser emitidos
+const emit = defineEmits(['close', 'create', 'update', 'delete', 'clear-error'])
 
 const isEditing = ref(false)
-// 'editableNote' guarda o estado do formulário, seja para uma nota nova ou uma existente
 const editableNote = ref<Partial<Note>>({})
-
-// Uma computed property para saber facilmente se estamos editando ou criando
 const isEditMode = computed(() => !!props.noteToEdit)
 
-// Este 'watch' é o cérebro do componente. Ele reage à mudança da prop 'noteToEdit'.
 watch(
   () => props.noteToEdit,
   (note) => {
-    if (note) { // Se uma nota foi passada, entramos no modo de edição.
-      editableNote.value = { ...note } // Copiamos os dados para o nosso rascunho
-      isEditing.value = false // E começamos no modo de visualização
-    } else { // Se nenhuma nota foi passada...
-      editableNote.value = { title: '', content: '' } // O rascunho começa em branco
-      isEditing.value = true // E já começamos direto no formulário para criar
+    if (note) {
+      editableNote.value = { ...note }
+      isEditing.value = false
+    } else {
+      editableNote.value = { title: '', content: '' }
+      isEditing.value = true
     }
   },
-  { immediate: true } // A opção 'immediate' força a execução do watch assim que o componente é criado
+  { immediate: true }
 )
 
-// Função unificada para salvar (cria ou atualiza)
 function handleSubmit() {
-  // Uma validação simples para garantir que os campos não estão vazios
-  if (editableNote.value.title && editableNote.value.content) {
-    if (isEditMode.value) {
-      emit('update', editableNote.value) // Emite o evento de 'update' se estivermos editando
-    } else {
-      emit('create', editableNote.value) // Emite o evento de 'create' se estivermos criando
-    }
+  // A validação local pode ser removida ou mantida como uma primeira barreira
+  if (isEditMode.value) {
+    emit('update', editableNote.value)
+  } else {
+    emit('create', editableNote.value)
   }
 }
 
-// Lida com o cancelamento
 function handleCancel() {
   if (isEditMode.value && props.noteToEdit) {
-    // Se estiver editando, apenas restaura os dados originais e volta para o modo de visualização
     editableNote.value = { ...props.noteToEdit }
     isEditing.value = false
   } else {
-    // Se estiver criando, o cancelamento simplesmente fecha o modal
     emit('close')
   }
 }
@@ -90,10 +76,8 @@ function handleCancel() {
 
       <div v-if="isEditMode && !isEditing">
         <h2>{{ noteToEdit?.title }}</h2>
-
         <p class="note-body">{{ noteToEdit?.content }}</p>
         <div class="footer">
-
           <div class="actions">
             <button @click="isEditing = true" aria-label="Editar nota">
               <EditIcon class="edit-icon" />
@@ -103,16 +87,36 @@ function handleCancel() {
               <TrashIcon class="trash-icon" />
             </button>
           </div>
-
         </div>
       </div>
 
       <div v-else class="edit-mode">
+        <div class="form-group">
+          <input
+            type="text"
+            v-model="editableNote.title"
+            placeholder="Título"
+            class="edit-title"
+            @input="emit('clear-error', 'title')"
+          />
+          <div v-if="errors?.title" class="error-balloon">
+            {{ errors.title }}
+          </div>
+        </div>
 
-
-        <input type="text" v-model="editableNote.title" placeholder="Título" class="edit-title" />
-        <textarea v-model="editableNote.content" placeholder="Conteúdo" rows="10" maxlength="999"
-          class="edit-content"></textarea>
+        <div class="form-group">
+          <textarea
+            v-model="editableNote.content"
+            placeholder="Conteúdo"
+            rows="10"
+            maxlength="999"
+            class="edit-content"
+            @input="emit('clear-error', 'content')"
+          ></textarea>
+          <div v-if="errors?.content" class="error-balloon">
+            {{ errors.content }}
+          </div>
+        </div>
 
         <div class="footer edit-actions">
           <button @click="handleCancel" aria-label="Cancelar" class="cancel-button">
@@ -128,6 +132,7 @@ function handleCancel() {
 </template>
 
 <style scoped>
+/* ... (Seu CSS existente) ... */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -142,7 +147,7 @@ function handleCancel() {
 }
 
 .modal-content {
-  background-color: #FFF7F1;
+  background-color: #fff7f1;
   padding: 30px;
   border-radius: 8px;
   width: 90%;
@@ -228,11 +233,9 @@ textarea {
   border-radius: 4px;
   border: 1px solid #ccc;
   font-size: 1rem;
-
-  margin-bottom: 15px;
+  margin-bottom: 0; /* Removido para o form-group controlar o espaço */
   resize: vertical;
   box-sizing: border-box;
-  /* Garante que padding não afete a largura total */
 }
 
 .edit-title {
@@ -267,14 +270,60 @@ textarea {
   color: #d46363;
 }
 
-
 .cancel-button {
-  color: #D32F2F;
+  color: #d32f2f;
   /* Vermelho */
 }
 
 .accept-button {
-  color: #388E3C;
+  color: #388e3c;
   /* Verde */
 }
+
+/* NOVO: CSS PARA OS BALÕES E GRUPOS DE FORMULÁRIO */
+.form-group {
+  position: relative;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem; /* Espaço para o balão não sobrepor o próximo campo */
+}
+
+.error-balloon {
+  position: absolute;
+  top: 100%; /* Posiciona o balão abaixo do campo */
+  left: 10px;
+  margin-top: 8px; /* Espaço entre o balão e o campo */
+  
+  background-color: #e53e3e; /* Vermelho para erro */
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  z-index: 10;
+  
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* A "setinha" do balão, agora apontando para cima */
+.error-balloon::after {
+  content: '';
+  position: absolute;
+  bottom: 100%; /* Posiciona a seta no topo do balão */
+  left: 20px;
+  
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent transparent #e53e3e transparent;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 </style>
